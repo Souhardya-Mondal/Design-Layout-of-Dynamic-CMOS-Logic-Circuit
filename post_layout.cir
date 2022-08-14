@@ -1,0 +1,102 @@
+* SPICE3 file created from zip.ext - technology: scmos
+
+.option scale=0.01u
+
+
+
+
+M1 x clk VDD VDD cmosp
+ +w=600 l=200 ad=300000 pd=2200 as=1.32e+06 ps=8000
+
+M2 x C y Gnd cmosn
++w=900 l=200 ad=450000 pd=2800 as=0 ps=0
+
+
+M3 y D Z Gnd cmosn 
++w=900 l=200 ad=0 pd=0 as=0 ps=0
+
+M4 y E Z Gnd cmosn 
++w=900 l=200 ad=0 pd=0 as=990000 ps=5800
+
+M5 Z clk GND Gnd cmosn 
++w=900 l=200 ad=1.35e+06 pd=8400 as=0 ps=0
+
+
+M6 p clk_bar VDD VDD cmosp 
++w=1200 l=200 ad=0 pd=0 as=0 ps=0
+
+M7 q x p Vdd cmosp 
++w=1200 l=200 ad=600000 pd=3400 as=1.44e+06 ps=7200
+
+
+M8 q clk_bar GND Gnd cmosn
++w=400 l=200 ad=200000 pd=1800 as=0 ps=0
+
+
+M9 out clk VDD VDD cmosp
++w=600 l=200 ad=300000 pd=2200 as=0 ps=0
+
+M10 out q s Gnd cmosn 
++w=500 l=200 ad=750000 pd=5000 as=1.2e+06 ps=7800
+
+
+M11 out A r Gnd cmosn 
++w=900 l=200 ad=0 pd=0 as=900000 ps=5600
+
+
+M12 r B s Gnd cmosn 
++ w=900 l=200 ad=0 pd=0 as=0 ps=0
+
+M13 s clk GND Gnd cmosn
++w=900 l=200 ad=0 pd=0 as=1.1e+06 ps=7400
+
+
+
+
+C0 clk VDD 14.09fF
+C1 r Gnd 3.57fF
+C2 GND Gnd 20.68fF
+C3 q Gnd 6.22fF
+C4 Z Gnd 5.50fF
+C5 out Gnd 10.15fF
+C6 p Gnd 4.51fF
+C7 x Gnd 10.40fF
+C8 clk Gnd 34.09fF
+C9 clk_bar Gnd 21.11fF
+
+
+
+
+
+
+V1 Vdd 0 dc 3.3
+Va A 0 dc 3.3
+Vb B 0 dc 3.3
+Vc C 0 dc 3.3
+Vd D 0 dc 3.3
+Ve E 0 dc 3.3
+
+
+* Load Capacitor
+C10 x gnd 100fF
+C11 q gnd 100fF
+C12 out gnd 100fF
+
+
+.include models.txt
+
+*TRANSIENT ANALYSIS with pulse inputs
+VCk  clk   0  PULSE (0 3.3 2NS 0 0 50NS 100NS)
+
+VCk1  clk_bar   0  PULSE (3.3 0 2NS 0 0 50NS 100NS)
+
+.tran 1ns 500ns 0nS
+
+.control
+run
+plot V(clk)  10+V(x) 15+V(out) 20+V(q)
+
+.endc
+.end
+
+
