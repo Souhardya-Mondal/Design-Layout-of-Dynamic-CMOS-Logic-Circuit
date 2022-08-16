@@ -3,6 +3,7 @@
 .option scale=0.01u
 
 
+*Adjust CMOSP widths to further reduce the rise time.
 
 
 M1 x clk VDD VDD cmosp
